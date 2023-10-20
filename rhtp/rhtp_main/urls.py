@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import AppointmentView
+from .views import AppointmentView, ViewAppointments
 
 router = DefaultRouter()
 router.register('appointment',AppointmentView)
@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
+
+    path('view/appointments/', ViewAppointments.as_view())
 
 
 ] + router.urls + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

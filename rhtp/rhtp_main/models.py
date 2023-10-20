@@ -7,6 +7,7 @@ class Appointments(models.Model):
     patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='patient')
     provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='provider')
     appointment_date = models.DateTimeField()
+    reason = models.TextField(default='')
 
 class Availability(models.Model):
     pass
