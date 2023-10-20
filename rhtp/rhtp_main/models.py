@@ -4,8 +4,12 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 # Create your models here.
 class Appointments(models.Model):
-    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='patient')
+    provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='provider')
     appointment_date = models.DateTimeField()
+
+class Availability(models.Model):
+    pass
 
 
 class CustomUserManager(BaseUserManager):
@@ -42,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('patient', 'PATIENT')
     ]
 
+    user_id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)

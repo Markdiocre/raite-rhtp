@@ -26,7 +26,7 @@ class UserCreationform(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = [
-            'email','first_name','last_name','middle_name','gender','password1','password2','address','phone_number',
+            'email','first_name','last_name','middle_name','gender','role','password1','password2','address','phone_number',
         ]
 
     def clean_password2(self):
@@ -61,7 +61,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = [
-            'email','middle_name','first_name','last_name','address','phone_number','gender','is_active','is_staff'
+            'email','middle_name','first_name','last_name','address','role','phone_number','gender','is_active','is_staff'
         ]
 
 
@@ -74,21 +74,21 @@ class UserChangeForm(forms.ModelForm):
 class UserAdmin(BaseUserAdmin):
     ordering = ['last_name','first_name','email']
     list_display=[
-        'first_name','last_name','middle_name','phone_number','address','gender' 
+        'user_id','first_name','last_name','middle_name','phone_number','address','gender','role'
     ]
-    list_filter = ['is_staff']
+    list_filter = ['is_staff','role']
     search_fields=[
         'email','last_name_name','first_name'
     ]
     fieldsets=[
-        [None,{'fields':['email','middle_name','first_name','last_name']}],
+        [None,{'fields':['email','middle_name','first_name','last_name','role']}],
         ['Permissions', {'fields':['is_active','is_staff']}],
         ['Others',{'fields':['address','phone_number']}]
     ]
     add_fieldsets = [
         [None,{
             'classes':['wide',],
-            'fields':['email','middle_name','first_name','last_name','password1','password2','address','phone_number','is_staff','is_active']
+            'fields':['email','middle_name','first_name','last_name','role','password1','password2','address','phone_number','is_staff','is_active']
         }]
     ]
 

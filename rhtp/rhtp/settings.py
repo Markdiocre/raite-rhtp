@@ -46,15 +46,39 @@ INSTALLED_APPS = [
 
 ]
 
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   ),
+}
+
+DJOSER = {
+    'HIDE_USERS':False,
+    "SET_PASSWORD_RETYPE":True,
+    'SERIALIZERS': {
+         'user_create': 'rhtp_main.serializers.UserRegistrationSerializer',
+         'user': 'rhtp_main.serializers.UserSerializer',
+         'current_user': 'rhtp_main.serializers.UserSerializer',
+    },
+    'PERMISSIONS': {
+        "user": ["rhtp_main.permissions.CurrentUserOrAdminLevel"],
+        "user_list": ["rhtp_main.permissions.CurrentUserOrAdminLevel"],
+        "user_delete": ["rhtp_main.permissions.CurrentUserOrAdminLevel"]
+    }
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'rhtp.urls'
 
@@ -88,6 +112,8 @@ DATABASES = {
 }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -105,6 +131,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 
 # Internationalization
