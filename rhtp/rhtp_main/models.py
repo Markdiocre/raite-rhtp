@@ -4,9 +4,17 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 # Create your models here.
 class Appointments(models.Model):
+
+    APPOINTMENT_STATUS = [
+        ('a', 'Accepted'),
+        ('r','Rejected'),
+        ('p', 'Pending')
+    ]
+
     patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='patient')
     provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='provider')
     appointment_date = models.DateTimeField()
+    status = models.CharField(max_length=1, choices=APPOINTMENT_STATUS, default='p')
     reason = models.TextField(default='')
 
 class Availability(models.Model):
@@ -18,6 +26,7 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email,**other_fields)
         user.set_password(password)
+        user.is_active = True
         user.save()
         return user
 

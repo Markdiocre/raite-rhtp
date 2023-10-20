@@ -47,12 +47,6 @@ class UserCreationform(forms.ModelForm):
         if commit:
             user.save()
         return user
-    
-    def __init__(self, *args, **kwargs):
-        super(UserCreationform, self).__init__(*args, **kwargs)
-
-        for fname, f in self.fields.items():
-            f.widget.attrs['class'] = 'form-control input-lg'
 
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
@@ -77,7 +71,7 @@ class UserChangeForm(forms.ModelForm):
 class UserAdmin(BaseUserAdmin):
     ordering = ['last_name','first_name','email']
     list_display=[
-        'user_id','first_name','last_name','middle_name','phone_number','address','gender','role'
+        'user_id','first_name','last_name','middle_name','phone_number','address','gender','role','is_active','is_staff'
     ]
     list_filter = ['is_staff','role']
     search_fields=[
