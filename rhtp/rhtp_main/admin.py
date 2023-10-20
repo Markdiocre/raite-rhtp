@@ -7,7 +7,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 
-from .models import User
+from .models import User, Appointments
+
+class AppointmentsAdmin(admin.ModelAdmin):
+    list_display = ['patient','provider','appointment_date']
 
 class UserCreationform(forms.ModelForm):
     email = forms.EmailField()
@@ -93,3 +96,4 @@ class UserAdmin(BaseUserAdmin):
     ]
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Appointments, AppointmentsAdmin)
