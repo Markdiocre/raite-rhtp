@@ -6,12 +6,12 @@ from .models import Appointments
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
     class Meta(BaseUserRegistrationSerializer.Meta):
-        fields = ('first_name','last_name','middle_name','phone_number','address','gender', 'is_staff','is_active')
+        fields = ('email','first_name','last_name','middle_name','role','phone_number','address','gender', 'is_staff','is_active','password')
 
 class UserSerializer(BaseUserSerializer):
     class Meta:
         model = User
-        fields = ['first_name','last_name','middle_name','phone_number','address','gender', 'is_staff','is_active']
+        fields = ['first_name','last_name','middle_name','role','phone_number','address','gender', 'is_staff','is_active']
 
 class AppointmentsSerializer(serializers.ModelSerializer):
     class Meta:
