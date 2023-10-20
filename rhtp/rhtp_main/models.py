@@ -37,6 +37,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('OTHERS', 'others')
     ]
 
+    ROLES = [
+        ('provider','PROVIDER'),
+        ('patient', 'PATIENT')
+    ]
+
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -44,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.IntegerField(null=True)
     address = models.CharField(max_length=100)
     gender = models.CharField(choices=GENDER_CHOICES,max_length=9, default='MALE')
+    role = models.CharField(choices=ROLES,max_length=11, default='patient')
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
@@ -54,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name','last_name','middle_name','phone_number','address','gender']
 
     def __str__(self):
-        return self.user_name
+        return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
