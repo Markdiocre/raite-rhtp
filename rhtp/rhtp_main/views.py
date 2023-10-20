@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 
-from .serializers import AppointmentsSerializer
-from .models import Appointments
+from .serializers import AppointmentsSerializer, UserSerializer
+from .models import Appointments, User
 
 User = get_user_model()
 
@@ -22,7 +22,7 @@ class AppointmentView(viewsets.ModelViewSet):
         return super().get_queryset().filter(patient = self.request.user)
 
 class ViewAppointments(views.APIView):
-    ermission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,]
 
     # def get_queryset(self):
     #     return super().get_queryset().filter(provider = self.request.user)
@@ -30,4 +30,13 @@ class ViewAppointments(views.APIView):
     def get(self, request, format=None):
         appoints = Appointments.objects.all().filter(provider = self.request.user)
         serializer = AppointmentsSerializer(appoints, many=True)
+        return Response(serializer.data)
+    
+class ShowProviders(views.APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, format=None):
+        providers = User.objects.all().filter(role='provider')
+        print(providers)
+        serializer = UserSerializer(providers, many=True)
         return Response(serializer.data)
