@@ -10,8 +10,10 @@ const password = ref<string>('')
 
 async function LoginSubmit() {
   console.log(`email: ${email.value}\npassword: ${password.value}`)
-  Login(email.value, password.value)
+  const islogin: any = await Login(email.value, password.value)
   // console.log(`status login ${isLogin}`)
+  console.log(islogin)
+  if (islogin == true) router.push({ name: 'appointmentView' })
 }
 </script>
 

@@ -1,6 +1,6 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
-
+const baseURL = 'http://127.0.0.1:8000/api/v1'
 const jwt = ref<string>('')
 
 export function GetToken() {
@@ -13,7 +13,7 @@ export function SetToken(newToken: string) {
 
 export function Login(email: string, password: string) {
   return axios
-    .post('/auth/token/login/', {
+    .post(`${baseURL}/auth/token/login/`, {
       email,
       password
     })
@@ -42,7 +42,7 @@ export function Register(
 ) {
   gender = gender.toUpperCase()
   return axios
-    .post('/auth/users/', {
+    .post(`${baseURL}/auth/users/`, {
       first_name,
       last_name,
       middle_name,
@@ -50,7 +50,8 @@ export function Register(
       address,
       gender,
       email,
-      password
+      password,
+      role
     })
     .then(() => {
       console.log('success on creating a account')
@@ -66,7 +67,7 @@ export function Register(
 }
 export function Logout() {
   const isLogout = axios
-    .post('/auth/token/logout/')
+    .post(`${baseURL}/auth/token/logout/`)
     .then(() => {
       return true
     })
